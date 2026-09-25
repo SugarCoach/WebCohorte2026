@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html class="dark" lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SugarCoach · Profesionales · Dashboard</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+  @layer base {
+    html, body { margin:0; padding:0; background-color:#1C0433; }
+    body { overscroll-behavior:none; }
+  }
+  ::-webkit-scrollbar { display:none; }
+  .btn-pro {
+    background: linear-gradient(135deg, #96036F 0%, #DF089C 60%, #A90789 100%);
+    box-shadow: 0 10px 30px -6px rgba(223,8,156,.55);
+  }
+  .btn-pro:hover { filter:brightness(1.08); box-shadow:0 14px 36px -4px rgba(223,8,156,.7); }
+  .nav-link-active { color:#fff !important; position:relative; }
+  .nav-link-active::after {
+    content:""; position:absolute; left:0; right:0; bottom:-8px; height:2px; border-radius:9999px;
+    background:linear-gradient(90deg,#C45CFF 0%,#DF089C 100%);
+  }
+  .tab-active {
+    background:rgba(223,8,156,.16) !important; border-color:rgba(223,8,156,.55) !important; color:#fff !important;
+  }
+  .patient-active { background:rgba(223,8,156,.12) !important; border-color:rgba(223,8,156,.55) !important; }
+  #sidebar { transition:transform .28s ease; }
+  @media (max-width:1023px){
+    #sidebar { position:fixed; top:0; left:0; bottom:0; z-index:60; transform:translateX(-105%); width:300px; }
+    #sidebar.open { transform:translateX(0); }
+  }
+</style>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+tailwind.config = {
+  darkMode:"class",
+  theme:{ extend:{
+    colors:{
+      "surface":"#050B1D","bg-deep":"#050B1D","on-surface":"#F7F8FC",
+      "surface-tier-1":"#0D1733","surface-tier-2":"#111D3D","surface-tier-3":"#172344",
+      "primary":"#C45CFF","primary-container":"#A94FCE","primary-fixed-dim":"#e7b4ff",
+      "secondary":"#2BC5C7","tertiary-container":"#ff3fb4","neon-magenta":"#ff3fb4",
+      "text-primary":"#F7F8FC","text-secondary":"#A8B0C5","text-tertiary":"#747F9B",
+      "accent-yellow":"#f6c744",
+      "pro-base":"#1C0433","pro-surface":"#240C4C","pro-plum":"#5B0556",
+      "pro-magenta-dark":"#96036F","pro-magenta-deep":"#A90789",
+      "pro-magenta":"#DF089C","pro-lilac":"#94679A","pro-mist":"#E8DDEE",
+      "med-ok":"#34D399","med-warn":"#F6C744","med-high":"#FB7185"
+    },
+    spacing:{
+      "gutter-desktop":"2rem","gutter-tablet":"1.5rem","gutter-mobile":"1rem",
+      "space-md":"1rem","space-lg":"1.5rem","space-xl":"2rem","space-xs":"0.5rem",
+      "space-2xl":"3rem","space-3xl":"4.5rem","space-sm":"0.75rem"
+    },
+    fontFamily:{
+      "display-lg":["Plus Jakarta Sans"],"headline-lg":["Plus Jakarta Sans"],
+      "headline-md":["Plus Jakarta Sans"],"headline-sm":["Plus Jakarta Sans"],
+      "label-lg":["Plus Jakarta Sans"],"label-md":["Plus Jakarta Sans"],
+      "label-sm":["Plus Jakarta Sans"],"body-lg":["Plus Jakarta Sans"],
+      "body-md":["Plus Jakarta Sans"],"body-sm":["Plus Jakarta Sans"]
+    },
+    fontSize:{
+      "display-lg":["48px",{lineHeight:"56px",letterSpacing:"-0.02em",fontWeight:"800"}],
+      "display-lg-mobile":["36px",{lineHeight:"44px",letterSpacing:"-0.02em",fontWeight:"800"}],
+      "headline-lg":["32px",{lineHeight:"40px",letterSpacing:"-0.015em",fontWeight:"700"}],
+      "headline-md":["22px",{lineHeight:"30px",letterSpacing:"-0.01em",fontWeight:"700"}],
+      "headline-sm":["18px",{lineHeight:"26px",fontWeight:"600"}],
+      "label-lg":["15px",{lineHeight:"20px",fontWeight:"600"}],
+      "label-md":["13px",{lineHeight:"18px",fontWeight:"600"}],
+      "label-sm":["11px",{lineHeight:"14px",fontWeight:"700"}],
+      "body-lg":["16px",{lineHeight:"26px",fontWeight:"400"}],
+      "body-md":["14px",{lineHeight:"22px",fontWeight:"400"}],
+      "body-sm":["12px",{lineHeight:"18px",fontWeight:"400"}]
+    }
+  }}
+};
+</script>
+</head>
+<body class="bg-pro-base font-body-md text-body-md text-on-surface antialiased selection:bg-pro-magenta selection:text-white">
+
+<!-- HEADER: idéntico a profesionales.html, Profesionales queda activo también aquí -->
+<header class="fixed top-0 left-0 w-full z-50 bg-[#1C0433]/85 backdrop-blur-xl border-b border-white/[0.08]">
+<div class="h-20 max-w-[1200px] mx-auto px-gutter-mobile md:px-gutter-tablet lg:px-gutter-desktop flex items-center justify-between gap-space-md">
+<a class="flex items-center gap-2 group" href="/profesionales">
+<div class="p-1.5 rounded-xl bg-white/[0.05] border border-white/10 group-hover:border-pro-magenta/40 transition-colors">
+<img alt="SugarCoach Logo Oficial" class="h-8 md:h-9 w-auto object-contain transition-transform group-hover:scale-105 filter drop-shadow-[0_2px_8px_rgba(223,8,156,0.35)]" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA8eBq5eQzruXAMaTMxS_mzvsFb1bqQZoOJo_sgOORoLvheBayGVtP9dU7nDlzZYdwZNQVwTFYYgeROtKpHUd1AImgnm6weuGvK1fVq8Rte1_6VEX-q6TbSPSXGHx6Ci4lM-0u6rOEMnhiK0p02cLKkkUgEoaJA6YZL42b_J_b_Q6_OlBBhwX0Gl4_PGoGXnzigYnGuFOeFzt-FYxPdTaszPfoxlDiG_Cm7bBP6Wak5E5MbhnWDv7ctpxYvr0LgzU8JkQ"/>
+</div>
+</a>
+<nav class="hidden lg:flex items-center gap-space-lg" aria-label="Navegación principal">
+<a class="font-label-lg text-label-lg text-text-secondary hover:text-white transition-colors" href="/#como-funciona">Cómo funciona</a>
+<a class="font-label-lg text-label-lg text-text-secondary hover:text-white transition-colors" href="/#familias">Para familias</a>
+<a class="font-label-lg text-label-lg text-white nav-link-active" data-path="profesionales" href="/profesionales" aria-current="page">Profesionales</a>
+<a class="font-label-lg text-label-lg text-text-secondary hover:text-white transition-colors" href="/#gamificacion">Logros</a>
+<a class="font-label-lg text-label-lg text-text-secondary hover:text-white transition-colors" href="/#tratamiento">Tratamiento</a>
+</nav>
+<div class="flex items-center gap-space-md">
+<button id="btn-menu" class="lg:hidden inline-flex items-center gap-1.5 h-11 px-4 rounded-full bg-white/[0.06] border border-white/10 font-label-lg text-label-lg" aria-label="Abrir pacientes y buscar">
+<span class="material-symbols-outlined text-[20px]">search</span> Pacientes
+</button>
+<a class="hidden sm:inline-flex items-center gap-2 px-space-lg py-space-xs min-h-[44px] rounded-full btn-pro text-white font-label-lg border border-white/20" href="/profesionales#acceso-profesional">
+<span class="material-symbols-outlined text-[18px]">stethoscope</span> Panel
+</a>
+</div>
+</div>
+</header>
+
+<div id="overlay" class="hidden fixed inset-0 bg-black/60 z-50 lg:hidden"></div>
+
+<main class="w-full pt-20 min-h-screen">
+<div class="max-w-[1200px] mx-auto px-gutter-mobile md:px-gutter-tablet lg:px-gutter-desktop py-space-lg md:py-space-xl">
+
+<!-- Breadcrumb + flujo -->
+<div class="flex flex-wrap items-center justify-between gap-3 mb-space-lg">
+<div class="flex items-center gap-2 font-body-sm text-body-sm text-text-secondary">
+<a href="/profesionales" class="hover:text-white">Profesionales</a>
+<span class="text-white/20">/</span>
+<span class="text-white font-bold">Dashboard</span>
+<span class="hidden sm:inline-flex ml-2 px-2.5 py-0.5 rounded-full bg-pro-magenta/15 border border-pro-magenta/40 text-pro-mist font-label-sm">Vista demo · datos simulados</span>
+</div>
+<div class="flex items-center gap-2 font-body-sm text-body-sm text-text-secondary">
+<span class="w-2 h-2 rounded-full bg-med-ok animate-pulse"></span>
+<span id="flow-step">1. Login ✓ &nbsp;·&nbsp; 2. Paciente seleccionado &nbsp;·&nbsp; 3. Monitoreo</span>
+</div>
+</div>
+
+<div class="grid grid-cols-1 lg:grid-cols-[300px_1fr] gap-space-lg items-start">
+
+<!-- Buscador visible siempre en mobile: abre el sidebar y enfoca el input -->
+<button id="btn-search-mobile" class="lg:hidden flex items-center gap-2 px-4 h-[48px] rounded-full bg-black/30 border border-white/10 text-left w-full">
+<span class="material-symbols-outlined text-text-tertiary text-[20px]">search</span>
+<span class="text-[14px] text-pro-lilac">Buscar paciente…</span>
+<span class="ml-auto font-label-sm text-label-sm text-pro-magenta font-bold">Ver lista</span>
+</button>
+
+<!-- ============ SIDEBAR ============ -->
+<aside id="sidebar" class="bg-pro-surface border border-pro-magenta-dark/40 rounded-3xl p-space-lg flex-col gap-space-md flex overflow-y-auto max-h-[calc(100vh-120px)] lg:sticky lg:top-24">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-text-tertiary">Profesional</span>
+<button id="btn-close" class="lg:hidden w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center" aria-label="Cerrar"><span class="material-symbols-outlined text-[18px]">close</span></button>
+</div>
+<!-- Perfil logueado -->
+<div class="flex items-center gap-3 p-space-sm rounded-2xl bg-pro-base border border-pro-magenta/25">
+<div class="w-12 h-12 rounded-2xl btn-pro flex items-center justify-center font-extrabold text-white">DR</div>
+<div class="flex-1">
+<p class="font-label-lg text-label-lg font-bold text-white">Dra. Ramírez</p>
+<p class="font-body-sm text-body-sm text-text-secondary">Diabetología · MP 45210</p>
+</div>
+<span class="w-2.5 h-2.5 rounded-full bg-med-ok" title="En línea"></span>
+</div>
+<!-- Buscador -->
+<div class="flex items-center gap-2 px-4 h-[48px] rounded-full bg-black/30 border border-white/10 focus-within:border-pro-magenta/60 transition-colors overflow-hidden">
+<span class="material-symbols-outlined text-text-tertiary text-[20px] shrink-0">search</span>
+<input id="search" type="text" autocomplete="off" placeholder="Buscar paciente…" class="bg-transparent border-0 outline-none ring-0 focus:ring-0 w-full min-w-0 flex-1 text-[14px] leading-[22px] text-white placeholder:text-pro-lilac p-0"/>
+<button id="search-clear" class="hidden shrink-0 w-7 h-7 rounded-full bg-white/[0.07] hover:bg-pro-magenta/30 items-center justify-center transition-colors" aria-label="Limpiar búsqueda">
+<span class="material-symbols-outlined text-[16px] text-text-secondary">close</span>
+</button>
+</div>
+<p id="search-count" class="font-body-sm text-body-sm text-text-tertiary"></p>
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-text-tertiary">Pacientes asignados</span>
+<div id="patient-list" class="flex flex-col gap-2"><!-- JS --></div>
+<button id="btn-invite" class="mt-1 inline-flex items-center justify-center gap-2 px-space-lg py-3 rounded-full btn-pro text-white font-label-lg border border-white/20 transition-all active:scale-95">
+<span class="material-symbols-outlined text-[20px]">person_add</span> + Invitar paciente
+</button>
+<p class="font-body-sm text-body-sm text-text-tertiary">Acceso en solo lectura. El paciente aprueba qué se comparte.</p>
+</aside>
+
+<!-- ============ PANEL PRINCIPAL ============ -->
+<section class="flex flex-col gap-space-lg min-w-0">
+<!-- Header paciente -->
+<div class="bg-pro-surface border border-pro-magenta-dark/40 rounded-3xl p-space-lg flex flex-col md:flex-row md:items-center gap-4">
+<div class="flex items-center gap-4 flex-1 min-w-0">
+<div id="p-avatar" class="w-14 h-14 rounded-2xl bg-pro-plum border border-pro-magenta/40 flex items-center justify-center font-extrabold text-white text-lg">LF</div>
+<div class="min-w-0">
+<div class="flex flex-wrap items-center gap-2">
+<h2 id="p-name" class="font-headline-md text-headline-md font-extrabold text-white">Lucía Fernández</h2>
+<span id="p-type" class="px-2.5 py-0.5 rounded-full bg-pro-magenta/15 border border-pro-magenta/40 text-pro-mist font-label-sm">DM1 · Bomba</span>
+</div>
+<p id="p-meta" class="font-body-sm text-body-sm text-text-secondary">14 años · Dx 2021 · Última consulta 02/09</p>
+</div>
+</div>
+<div class="flex flex-wrap items-center gap-2">
+<span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/[0.05] border border-white/10 font-label-md text-label-md text-text-secondary">
+<span class="material-symbols-outlined text-[16px]">visibility</span> Solo lectura
+</span>
+<span id="last-update" class="font-body-sm text-body-sm text-text-tertiary">Actualizado hace 5 min</span>
+<button id="btn-refresh" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-white/[0.06] border border-pro-magenta/40 font-label-md text-label-md hover:bg-pro-magenta/20 transition-all active:scale-95">
+<span class="material-symbols-outlined text-[18px] text-pro-magenta">refresh</span> Actualizar
+</button>
+</div>
+</div>
+
+<!-- Tabs internas -->
+<div class="flex gap-2 overflow-x-auto pb-1" role="tablist" aria-label="Secciones del paciente">
+<button data-tab="inicio" role="tab" class="tab-btn tab-active whitespace-nowrap px-5 py-2.5 rounded-full bg-white/[0.05] border border-white/10 font-label-lg text-label-lg text-text-secondary hover:text-white transition-all">Inicio</button>
+<button data-tab="historial" role="tab" class="tab-btn whitespace-nowrap px-5 py-2.5 rounded-full bg-white/[0.05] border border-white/10 font-label-lg text-label-lg text-text-secondary hover:text-white transition-all">Historial</button>
+<button data-tab="estadisticas" role="tab" class="tab-btn whitespace-nowrap px-5 py-2.5 rounded-full bg-white/[0.05] border border-white/10 font-label-lg text-label-lg text-text-secondary hover:text-white transition-all">Estadísticas</button>
+<button data-tab="tratamiento" role="tab" class="tab-btn whitespace-nowrap px-5 py-2.5 rounded-full bg-white/[0.05] border border-white/10 font-label-lg text-label-lg text-text-secondary hover:text-white transition-all">Tratamiento</button>
+<button data-tab="perfil" role="tab" class="tab-btn whitespace-nowrap px-5 py-2.5 rounded-full bg-white/[0.05] border border-white/10 font-label-lg text-label-lg text-text-secondary hover:text-white transition-all">Perfil</button>
+</div>
+
+<!-- TAB: INICIO -->
+<div id="tab-inicio" class="tab-panel flex-col gap-space-lg flex">
+<!-- Valor destacado + rangos -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-lg">
+<div class="md:col-span-1 rounded-3xl p-space-xl border border-pro-magenta/40 relative overflow-hidden" style="background:linear-gradient(160deg,#5B0556 0%,#240C4C 65%)">
+<div class="absolute -top-10 -right-10 w-40 h-40 bg-[#DF089C]/30 rounded-full blur-3xl"></div>
+<p class="font-label-md text-label-md text-pro-mist/80 uppercase tracking-wider">Medición actual</p>
+<div class="flex items-end gap-3 mt-1">
+<span id="big-value" class="font-extrabold text-white" style="font-size:52px;line-height:1">116</span>
+<span class="font-body-md text-body-md text-pro-mist pb-2">mg/dL</span>
+</div>
+<span id="big-badge" class="mt-3 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-med-ok/15 border border-med-ok/40 text-med-ok font-label-md">● En rango</span>
+<p id="big-sub" class="mt-2 font-body-sm text-body-sm text-pro-mist/80">Hace 25 min · Sensor continuo</p>
+</div>
+<div class="md:col-span-2 grid grid-cols-3 gap-space-sm">
+<div class="rounded-2xl bg-pro-surface border border-white/10 p-space-md text-center">
+<span class="font-label-sm text-label-sm text-text-tertiary uppercase">Mínimo</span>
+<p class="font-headline-md text-headline-md font-extrabold text-white"><span id="r-min">68</span><span class="text-xs font-normal text-text-tertiary"> mg/dL</span></p>
+<p class="font-body-sm text-body-sm text-text-tertiary">7 días</p>
+</div>
+<div class="rounded-2xl bg-pro-surface border border-pro-magenta/40 p-space-md text-center">
+<span class="font-label-sm text-label-sm text-pro-magenta uppercase">Objetivo</span>
+<p class="font-headline-md text-headline-md font-extrabold text-white">100<span class="text-xs font-normal text-text-tertiary"> mg/dL</span></p>
+<p class="font-body-sm text-body-sm text-text-tertiary">Target</p>
+</div>
+<div class="rounded-2xl bg-pro-surface border border-white/10 p-space-md text-center">
+<span class="font-label-sm text-label-sm text-text-tertiary uppercase">Máximo</span>
+<p class="font-headline-md text-headline-md font-extrabold text-white"><span id="r-max">242</span><span class="text-xs font-normal text-text-tertiary"> mg/dL</span></p>
+<p class="font-body-sm text-body-sm text-text-tertiary">7 días</p>
+</div>
+<div class="col-span-3 grid grid-cols-1 sm:grid-cols-3 gap-space-sm">
+<div class="rounded-2xl bg-pro-surface border border-white/10 p-space-md">
+<p class="font-label-sm text-label-sm text-text-tertiary uppercase">En rango · 7 días</p>
+<p class="font-headline-md text-headline-md font-extrabold text-white"><span id="tir">70</span>%</p>
+<p id="tir-delta" class="font-body-sm text-body-sm text-med-ok">▲ +4 pts vs semana anterior</p>
+</div>
+<div class="rounded-2xl bg-pro-surface border border-white/10 p-space-md">
+<p class="font-label-sm text-label-sm text-text-tertiary uppercase">Promedio semanal</p>
+<p class="font-headline-md text-headline-md font-extrabold text-white"><span id="avg">142</span><span class="text-xs font-normal"> mg/dL</span></p>
+<p class="font-body-sm text-body-sm text-text-tertiary">eA1c est. 6.5%</p>
+</div>
+<div class="rounded-2xl bg-pro-surface border border-white/10 p-space-md">
+<p class="font-label-sm text-label-sm text-text-tertiary uppercase">Último registro</p>
+<p id="last-log" class="font-label-lg text-label-lg font-bold text-white">Hoy 07:30 · 118 mg/dL</p>
+<p class="font-body-sm text-body-sm text-text-tertiary">Desayuno + basal OK</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Gráfico -->
+<div class="rounded-3xl bg-pro-surface border border-pro-magenta-dark/40 p-space-lg">
+<div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+<div>
+<h3 class="font-headline-sm text-headline-sm font-bold text-white">Glucosa · últimos 7 días</h3>
+<p class="font-body-sm text-body-sm text-text-tertiary">Banda objetivo 70–180 mg/dL · línea <span class="text-pro-magenta font-bold">fucsia de marca</span></p>
+</div>
+<div class="flex gap-2 font-label-sm text-label-sm">
+<span class="px-2.5 py-1 rounded-full bg-med-ok/15 border border-med-ok/40 text-med-ok">En rango</span>
+<span class="px-2.5 py-1 rounded-full bg-med-warn/15 border border-med-warn/40 text-med-warn">Alerta baja</span>
+<span class="px-2.5 py-1 rounded-full bg-med-high/15 border border-med-high/40 text-med-high">Alerta alta</span>
+</div>
+</div>
+<div class="w-full overflow-x-auto"><canvas id="chart" class="w-full" style="min-width:560px;height:260px"></canvas></div>
+</div>
+</div>
+
+<!-- TAB: HISTORIAL -->
+<div id="tab-historial" class="tab-panel hidden flex-col gap-space-sm flex">
+<div class="rounded-3xl bg-pro-surface border border-white/10 p-space-lg overflow-x-auto">
+<table class="w-full text-left min-w-[560px]">
+<thead><tr class="font-label-sm text-label-sm uppercase text-text-tertiary">
+<th class="py-2">Fecha</th><th>Hora</th><th>Glucosa</th><th>Insulina</th><th>Nota</th><th>Estado</th>
+</tr></thead>
+<tbody id="history-body" class="font-body-md text-body-md text-text-secondary"></tbody>
+</table>
+</div>
+</div>
+
+<!-- TAB: ESTADÍSTICAS -->
+<div id="tab-estadisticas" class="tab-panel hidden grid-cols-1 md:grid-cols-3 gap-space-lg hidden">
+<div class="rounded-3xl bg-pro-surface border border-white/10 p-space-lg"><p class="font-label-sm uppercase text-text-tertiary">TIR mensual</p><p class="font-extrabold text-white text-4xl">68%</p><p class="font-body-sm text-text-secondary">Hipo 4% · Hiper 28%</p></div>
+<div class="rounded-3xl bg-pro-surface border border-white/10 p-space-lg"><p class="font-label-sm uppercase text-text-tertiary">Variabilidad (CV)</p><p class="font-extrabold text-white text-4xl">31%</p><p class="font-body-sm text-text-secondary">Objetivo ≤ 36%</p></div>
+<div class="rounded-3xl bg-pro-surface border border-pro-magenta/40 p-space-lg"><p class="font-label-sm uppercase text-pro-magenta">Adherencia registro</p><p class="font-extrabold text-white text-4xl">86%</p><p class="font-body-sm text-text-secondary">6 de 7 días completos</p></div>
+</div>
+
+<!-- TAB: TRATAMIENTO -->
+<div id="tab-tratamiento" class="tab-panel hidden grid-cols-1 md:grid-cols-2 gap-space-lg hidden">
+<div class="rounded-3xl bg-pro-surface border border-white/10 p-space-lg">
+<h3 class="font-headline-sm font-bold text-white mb-3">Rangos personalizados</h3>
+<div class="grid grid-cols-3 gap-2 text-center">
+<div class="rounded-2xl bg-black/30 border border-white/10 p-3"><p class="font-label-sm text-text-tertiary">HIPO</p><p class="font-extrabold text-white text-xl">70</p></div>
+<div class="rounded-2xl bg-black/30 border border-pro-magenta/40 p-3"><p class="font-label-sm text-pro-magenta">TARGET</p><p class="font-extrabold text-white text-xl">100</p></div>
+<div class="rounded-2xl bg-black/30 border border-white/10 p-3"><p class="font-label-sm text-text-tertiary">HIPER</p><p class="font-extrabold text-white text-xl">180</p></div>
+</div>
+</div>
+<div class="rounded-3xl bg-pro-surface border border-white/10 p-space-lg">
+<h3 class="font-headline-sm font-bold text-white mb-3">Esquema actual</h3>
+<ul class="font-body-md text-text-secondary flex flex-col gap-2">
+<li>· Bomba · Basal 0.8 U/h nocturna</li>
+<li>· Rápida: Humalog (corrección 1:40)</li>
+<li>· Lantus de respaldo en viajes</li>
+</ul>
+<button class="mt-4 px-5 py-2.5 rounded-full bg-white/[0.06] border border-pro-magenta/40 font-label-lg hover:bg-pro-magenta/20 transition-all">Exportar PDF para historia clínica</button>
+</div>
+</div>
+
+<!-- TAB: PERFIL -->
+<div id="tab-perfil" class="tab-panel hidden flex-col gap-space-sm flex">
+<div class="rounded-3xl bg-pro-surface border border-white/10 p-space-lg font-body-md text-text-secondary">
+<p><strong class="text-white">Consentimiento:</strong> comparte glucosa, insulina y actividad. No comparte notas de ánimo.</p>
+<p class="mt-2"><strong class="text-white">Contacto cuidador:</strong> Mamá (sincronizada) · Papá (sincronizado)</p>
+<p class="mt-2"><strong class="text-white">Alergias / notas:</strong> sin alergias registradas.</p>
+</div>
+</div>
+
+</section>
+</div>
+</div>
+</main>
+
+<footer class="w-full bg-[#12031F] border-t border-pro-magenta/20 py-space-lg">
+<div class="max-w-[1200px] mx-auto px-gutter-mobile md:px-gutter-tablet lg:px-gutter-desktop flex flex-col sm:flex-row items-center justify-between gap-2">
+<p class="font-body-sm text-body-sm text-text-tertiary">© 2024 SugarCoach · Panel profesional (solo lectura)</p>
+<a href="/profesionales" class="font-body-sm text-body-sm text-pro-magenta hover:text-white">← Volver a Profesionales</a>
+</div>
+</footer>
+
+<!-- Modal invitar -->
+<div id="modal" class="hidden fixed inset-0 z-[70] flex items-center justify-center p-4 bg-black/70">
+<div class="w-full max-w-md rounded-3xl bg-pro-surface border border-pro-magenta/40 p-space-xl flex flex-col gap-3">
+<h3 class="font-headline-md font-extrabold text-white">Invitar paciente</h3>
+<p class="font-body-md text-text-secondary">Se envía un código de vinculación. Queda como “Invitación pendiente” hasta que acepte.</p>
+<input id="inv-name" type="text" placeholder="Nombre y apellido" class="px-4 py-3 rounded-2xl bg-black/40 border border-white/10 text-white placeholder:text-pro-lilac focus:outline-none focus:border-pro-magenta"/>
+<input id="inv-mail" type="email" placeholder="Email del paciente / tutor" class="px-4 py-3 rounded-2xl bg-black/40 border border-white/10 text-white placeholder:text-pro-lilac focus:outline-none focus:border-pro-magenta"/>
+<div class="flex gap-2 justify-end mt-1">
+<button id="modal-cancel" class="px-5 py-2.5 rounded-full bg-white/[0.06] border border-white/10 font-label-lg">Cancelar</button>
+<button id="modal-send" class="px-5 py-2.5 rounded-full btn-pro text-white font-label-lg border border-white/20">Enviar invitación</button>
+</div>
+</div>
+</div>
+
+<script>
+// ---------- Datos simulados ----------
+const patients = [
+  { id:"lucia", name:"Lucía Fernández", short:"LF", age:"14 años · Dx 2021", type:"DM1 · Bomba", meta:"14 años · Dx 2021 · Última consulta 02/09", sync:"Sync hace 5 min", pending:false, current:116, state:"ok", min:68, max:242, tir:70, delta:"+4 pts vs semana anterior", avg:142, lastLog:"Hoy 07:30 · 118 mg/dL", days:["Lun","Mar","Mié","Jue","Vie","Sáb","Hoy"], series:[148,132,165,118,142,178,116] },
+  { id:"mateo", name:"Mateo Álvarez", short:"MA", age:"9 años · Dx 2023", type:"DM1 · Lapicera", meta:"9 años · Dx 2023 · Última consulta 28/08", sync:"Sync hace 22 min", pending:false, current:210, state:"high", min:74, max:268, tir:58, delta:"−3 pts vs semana anterior", avg:171, lastLog:"Hoy 07:05 · 204 mg/dL", days:["Lun","Mar","Mié","Jue","Vie","Sáb","Hoy"], series:[180,165,190,175,201,188,210] },
+  { id:"sofia", name:"Sofía Ruiz", short:"SR", age:"17 años · Dx 2019", type:"DM2 · Basal", meta:"17 años · Dx 2019 · Última consulta 20/08", sync:"Sync hace 1 h", pending:false, current:64, state:"low", min:59, max:198, tir:66, delta:"+1 pt vs semana anterior", avg:128, lastLog:"Hoy 06:50 · 64 mg/dL", days:["Lun","Mar","Mié","Jue","Vie","Sáb","Hoy"], series:[122,118,135,110,98,84,64] },
+  { id:"nuev", name:"Invitación · F. Gómez", short:"FG", age:"Pendiente de vincular", type:"Por vincular", meta:"Código enviado ayer", sync:"Invitación pendiente", pending:true, current:0, state:"pending", min:0, max:0, tir:0, delta:"—", avg:0, lastLog:"—", days:["Lun","Mar","Mié","Jue","Vie","Sáb","Hoy"], series:[0,0,0,0,0,0,0] }
+];
+let currentId = "lucia";
+let lastUpdateMin = 5;
+
+// ---------- Sidebar ----------
+const listEl = document.getElementById("patient-list");
+const searchInput = document.getElementById("search");
+const searchClear = document.getElementById("search-clear");
+const searchCount = document.getElementById("search-count");
+function renderList(filter=""){
+  const q = filter.trim().toLowerCase();
+  const shown = patients.filter(p=>p.name.toLowerCase().includes(q));
+  listEl.innerHTML = "";
+  searchCount.textContent = q ? `${shown.length} resultado${shown.length===1?"":"s"}` : `${patients.length} pacientes`;
+  searchClear.classList.toggle("hidden", q.length===0);
+  searchClear.classList.toggle("inline-flex", q.length>0);
+  if(shown.length===0){
+    listEl.innerHTML = `<div class="p-4 rounded-2xl bg-pro-base border border-white/[0.07] text-center">
+      <p class="font-label-md font-bold text-white">Sin resultados</p>
+      <p class="font-body-sm text-[12px] text-text-tertiary">Probá con otro nombre o invitá al paciente.</p>
+    </div>`;
+    return;
+  }
+  shown.forEach(p=>{
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className = "flex items-center gap-3 p-3 rounded-2xl border text-left transition-all hover:border-pro-magenta/50 " + (p.id===currentId ? "patient-active border-pro-magenta/60 bg-pro-magenta/10" : "bg-pro-base border-white/[0.07]");
+    b.innerHTML = `
+      <div class="w-10 h-10 rounded-xl flex items-center justify-center font-bold text-white shrink-0 ${p.pending?'bg-white/10 border border-white/10':'btn-pro'}">${p.short}</div>
+      <div class="flex-1 min-w-0">
+        <p class="font-label-md font-bold text-white truncate">${p.name}</p>
+        <p class="font-body-sm text-[12px] ${p.pending?'text-med-warn':'text-text-tertiary'}">${p.pending?'🕓 ':''}${p.sync}</p>
+      </div>
+      ${p.id===currentId?'<span class="w-2 h-2 rounded-full bg-pro-magenta shrink-0"></span>':''}`;
+    b.onclick = ()=>{ selectPatient(p.id); closeSidebar(); };
+    listEl.appendChild(b);
+  });
+}
+searchInput.addEventListener("input", e=>renderList(e.target.value));
+searchClear.addEventListener("click", ()=>{ searchInput.value=""; renderList(""); searchInput.focus(); });
+
+// ---------- Selección + refresh ----------
+function stateBadge(s){
+  if(s==="ok") return ['● En rango','bg-med-ok/15 border-med-ok/40 text-med-ok'];
+  if(s==="high") return ['▲ Alerta alta','bg-med-high/15 border-med-high/40 text-med-high'];
+  if(s==="low") return ['▼ Alerta baja','bg-med-warn/15 border-med-warn/40 text-med-warn'];
+  return ['○ Pendiente','bg-white/[0.06] border-white/10 text-text-secondary'];
+}
+function selectPatient(id){
+  currentId = id;
+  const p = patients.find(x=>x.id===id);
+  document.getElementById("p-name").textContent = p.name;
+  document.getElementById("p-type").textContent = p.type;
+  document.getElementById("p-meta").textContent = p.meta;
+  document.getElementById("p-avatar").textContent = p.short;
+  document.getElementById("big-value").textContent = p.pending ? "—" : p.current;
+  const [txt, cls] = stateBadge(p.state);
+  const badge = document.getElementById("big-badge");
+  badge.textContent = txt; badge.className = "mt-3 inline-flex items-center gap-1.5 px-3 py-1 rounded-full border font-label-md " + cls;
+  document.getElementById("r-min").textContent = p.min;
+  document.getElementById("r-max").textContent = p.max;
+  document.getElementById("tir").textContent = p.tir;
+  document.getElementById("tir-delta").textContent = p.delta;
+  document.getElementById("avg").textContent = p.avg;
+  document.getElementById("last-log").textContent = p.lastLog;
+  document.getElementById("flow-step").innerHTML = "1. Login ✓ &nbsp;·&nbsp; 2. <strong class='text-white'>"+p.name+"</strong> &nbsp;·&nbsp; 3. Monitoreo";
+  renderHistory(p); drawChart(p); renderList(document.getElementById("search").value);
+}
+document.getElementById("btn-refresh").onclick = ()=>{
+  lastUpdateMin = 0;
+  const p = patients.find(x=>x.id===currentId);
+  if(!p.pending){ p.current = Math.max(60, Math.min(260, p.current + Math.round((Math.random()-0.5)*10))); }
+  document.getElementById("last-update").textContent = "Actualizado recién";
+  selectPatient(currentId);
+};
+setInterval(()=>{ lastUpdateMin++; document.getElementById("last-update").textContent = lastUpdateMin===0?"Actualizado recién":`Actualizado hace ${lastUpdateMin} min`; }, 60000);
+
+// ---------- Historial ----------
+function renderHistory(p){
+  const tb = document.getElementById("history-body"); tb.innerHTML="";
+  if(p.pending){ tb.innerHTML = "<tr><td colspan='6' class='py-4'>Sin datos: invitación pendiente.</td></tr>"; return; }
+  const rows = p.series.map((v,i)=>({d:p.days[i], v})).reverse().slice(0,5);
+  rows.forEach((r,i)=>{
+    const st = r.v<70?["Baja","text-med-warn"]:r.v>180?["Alta","text-med-high"]:["En rango","text-med-ok"];
+    tb.innerHTML += `<tr class="border-t border-white/[0.06]">
+      <td class="py-2">${r.d}</td><td>${["07:30","12:40","19:15","21:30","06:50"][i%5]}</td>
+      <td class="font-bold text-white">${r.v} mg/dL</td><td>${(4+i)%6} U</td>
+      <td>Registro ${i+1}</td><td class="${st[1]} font-bold">${st[0]}</td></tr>`;
+  });
+}
+
+// ---------- Gráfico canvas (línea fucsia + banda objetivo) ----------
+function drawChart(p){
+  const c = document.getElementById("chart");
+  const dpr = window.devicePixelRatio||1;
+  const W = c.clientWidth||600, H = 260;
+  c.width = W*dpr; c.height = H*dpr;
+  const ctx = c.getContext("2d"); ctx.scale(dpr,dpr); ctx.clearRect(0,0,W,H);
+  const padL=44,padR=12,padT=14,padB=28;
+  const min=50,max=280;
+  const X = i=> padL + (W-padL-padR)*(i/(p.days.length-1));
+  const Y = v=> padT + (H-padT-padB)*(1-(v-min)/(max-min));
+  // banda objetivo 70-180
+  ctx.fillStyle = "rgba(223,8,156,0.10)";
+  ctx.fillRect(padL, Y(180), W-padL-padR, Y(70)-Y(180));
+  ctx.strokeStyle="rgba(255,255,255,0.08)"; ctx.fillStyle="#747F9B"; ctx.font="11px 'Plus Jakarta Sans'";
+  [70,100,180,250].forEach(v=>{ ctx.beginPath(); ctx.moveTo(padL,Y(v)); ctx.lineTo(W-padR,Y(v)); ctx.stroke(); ctx.fillText(v+"",8,Y(v)+4); });
+  if(p.pending){ ctx.fillStyle="#A8B0C5"; ctx.font="14px 'Plus Jakarta Sans'"; ctx.fillText("Sin datos todavía", padL+20, H/2); return; }
+  // línea fucsia con relleno
+  const grad = ctx.createLinearGradient(0,padT,0,H-padB);
+  grad.addColorStop(0,"rgba(223,8,156,0.35)"); grad.addColorStop(1,"rgba(223,8,156,0)");
+  ctx.beginPath(); p.series.forEach((v,i)=>{ i?ctx.lineTo(X(i),Y(v)):ctx.moveTo(X(i),Y(v)); });
+  ctx.strokeStyle="#DF089C"; ctx.lineWidth=3; ctx.lineJoin="round"; ctx.stroke();
+  ctx.lineTo(X(p.series.length-1),H-padB); ctx.lineTo(X(0),H-padB); ctx.closePath(); ctx.fillStyle=grad; ctx.fill();
+  // puntos por estado + etiquetas días
+  p.series.forEach((v,i)=>{
+    ctx.beginPath(); ctx.arc(X(i),Y(v),5,0,7);
+    ctx.fillStyle = v<70?"#F6C744":v>180?"#FB7185":"#34D399";
+    ctx.fill(); ctx.lineWidth=2; ctx.strokeStyle="#1C0433"; ctx.stroke();
+    ctx.fillStyle="#A8B0C5"; ctx.fillText(p.days[i], X(i)-10, H-8);
+  });
+}
+window.addEventListener("resize", ()=>selectPatient(currentId));
+
+// ---------- Tabs ----------
+document.querySelectorAll(".tab-btn").forEach(b=>b.onclick=()=>{
+  document.querySelectorAll(".tab-btn").forEach(x=>x.classList.remove("tab-active"));
+  b.classList.add("tab-active");
+  const t = b.dataset.tab;
+  ["inicio","historial","estadisticas","tratamiento","perfil"].forEach(k=>{
+    const el = document.getElementById("tab-"+k);
+    const show = k===t;
+    el.classList.toggle("hidden", !show);
+    el.classList.toggle("flex", show && (k==="inicio"||k==="historial"||k==="perfil"));
+    el.classList.toggle("grid", show && (k==="estadisticas"||k==="tratamiento"));
+  });
+  if(t==="inicio") drawChart(patients.find(x=>x.id===currentId));
+});
+
+// ---------- Sidebar mobile / modal ----------
+const sb=document.getElementById("sidebar"), ov=document.getElementById("overlay");
+function closeSidebar(){ sb.classList.remove("open"); ov.classList.add("hidden"); }
+function openSidebar(focusSearch=false){
+  sb.classList.add("open"); ov.classList.remove("hidden");
+  if(focusSearch) setTimeout(()=>document.getElementById("search").focus(), 300);
+}
+document.getElementById("btn-menu").onclick=()=>openSidebar(false);
+const btnSearchMobile=document.getElementById("btn-search-mobile");
+if(btnSearchMobile) btnSearchMobile.onclick=()=>openSidebar(true);
+document.getElementById("btn-close").onclick=closeSidebar; ov.onclick=closeSidebar;
+const modal=document.getElementById("modal");
+document.getElementById("btn-invite").onclick=()=>modal.classList.remove("hidden");
+document.getElementById("modal-cancel").onclick=()=>modal.classList.add("hidden");
+modal.onclick=e=>{ if(e.target===modal) modal.classList.add("hidden"); };
+document.getElementById("modal-send").onclick=()=>{
+  const n=document.getElementById("inv-name").value.trim()||"Nuevo paciente";
+  patients.push({id:"p"+Date.now(),name:n,short:n.split(" ").map(w=>w[0]).join("").slice(0,2).toUpperCase(),age:"—",type:"Por vincular",meta:"Invitación recién enviada",sync:"Invitación pendiente",pending:true,current:0,state:"pending",min:0,max:0,tir:0,delta:"—",avg:0,lastLog:"—",days:["Lun","Mar","Mié","Jue","Vie","Sáb","Hoy"],series:[0,0,0,0,0,0,0]});
+  modal.classList.add("hidden"); renderList("");
+};
+
+// init (?patient= para deep-link desde /profesionales)
+const q = new URLSearchParams(location.search).get("patient");
+if(q && patients.some(p=>p.id===q)) currentId=q;
+renderList(""); selectPatient(currentId);
+</script>
+</body>
+</html>
