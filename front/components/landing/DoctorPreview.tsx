@@ -4,7 +4,12 @@ import Image from "next/image"
 import { Zap, Clock, LayoutDashboard, ArrowRight } from "lucide-react"
 import { MaterialIcon } from "@/components/ui/MaterialIcon"
 import { useLanguage } from "@/lib/i18n"
+import { Permanent_Marker } from "next/font/google"
 
+const permanentMarker = Permanent_Marker({
+  weight: "400",
+  subsets: ["latin"],
+})
 export function DoctorPreview() {
   const { t } = useLanguage()
 
@@ -15,7 +20,7 @@ export function DoctorPreview() {
 
         {/* Título */}
         <div className="relative z-10 mb-space-2xl text-center">
-          <h2 className="theme-panel-text font-display-lg text-display-lg-mobile font-extrabold leading-tight tracking-tight md:text-headline-lg">
+          <h2 className={`theme-panel-text font-display-lg text-display-lg-mobile font-extrabold leading-tight tracking-tight md:text-headline-lg ${permanentMarker.className}`}>
             {t("doctorPreview.title")}
           </h2>
 
@@ -27,13 +32,17 @@ export function DoctorPreview() {
         </div>
 
         {/* Fuente estilo manuscrito */}
-        <style>{`
+        <style
+          dangerouslySetInnerHTML={{
+            __html: `
           @import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap');
 
           .sc-marker {
             font-family: 'Permanent Marker', cursive;
           }
-        `}</style>
+        `,
+          }}
+        />
 
         {/* App paciente + flechas + Dashboard */}
         <div className="relative z-10 grid grid-cols-1 items-center gap-space-xl lg:grid-cols-12">
@@ -195,3 +204,4 @@ export function DoctorPreview() {
     </section>
   )
 }
+
