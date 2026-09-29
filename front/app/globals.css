@@ -1455,3 +1455,8 @@ html {
   transform: none;
   background-color: transparent;
 }
+
+/* Tipografía manuscrita para notas/flechas de DoctorPreview */
+.sc-marker {
+  font-family: 'Permanent Marker', cursive;
+}

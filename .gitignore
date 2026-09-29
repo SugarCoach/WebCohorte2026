@@ -1,0 +1,10 @@
+# Dependencies
+node_modules/
+
+# Local cache and tool files
+.atl/
+.codegraph/
+
+# OS metadata
+.DS_Store
+Thumbs.db
