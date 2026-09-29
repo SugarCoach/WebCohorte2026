@@ -135,18 +135,18 @@ export default function PremiumPage() {
          * ========================================================================= */}
         <div className="mb-12 overflow-hidden rounded-3xl border border-sky-500/20 bg-gradient-to-br from-sky-500/10 via-blue-500/5 to-transparent p-6 shadow-xl dark:border-sky-400/25 dark:bg-[#07132B] md:p-8">
           <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
-            <div className="flex items-start gap-4">
+            <div className="flex items-start gap-4 flex-1 min-w-0 lg:mr-8">
               <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-sky-500/20 text-sky-700 dark:text-sky-300 shadow-sm">
                 <Gift className="h-6 w-6" />
               </div>
-              <div>
-                <span className="inline-flex items-center gap-1.5 text-xs font-extrabold uppercase tracking-wider text-sky-700 dark:text-sky-300">
+              <div className="flex-1 min-w-0">
+                <span className="inline-flex items-center gap-1.5 text-xs font-extrabold uppercase tracking-wider text-sky-700 dark:text-sky-300 origin-left transition-transform duration-200 hover:scale-105 cursor-default">
                   {t("premium.banner.badge")}
                 </span>
-                <h2 className="mt-1 text-lg sm:text-xl font-extrabold text-ink">
+                <h2 className="mt-1 text-lg sm:text-xl font-extrabold text-ink origin-top-left max-w-[90%]">
                   {t("premium.banner.headline")}
                 </h2>
-                <p className="mt-1.5 text-xs sm:text-sm text-text-secondary leading-relaxed">
+                <p className="mt-1.5 text-xs sm:text-sm text-text-secondary leading-relaxed origin-top-left max-w-[90%]">
                   {t("premium.banner.descPrefix")}{" "}
                   <strong className="text-ink font-bold">{t("premium.banner.descBold")}</strong>{" "}
                   {t("premium.banner.descSuffix")}
@@ -182,13 +182,15 @@ export default function PremiumPage() {
                 <div className="mt-8 border-t border-sky-500/20 pt-6">
                   {!submitted ? (
                     <form onSubmit={handleSubmit} className="space-y-4 max-w-2xl mx-auto">
-                      <div className="rounded-2xl bg-base/80 p-4 border border-line/10 dark:bg-black/20 text-center mb-6">
-                        <span className="text-xs font-bold text-sky-700 dark:text-sky-300 uppercase tracking-wider block">
+                      <div className="rounded-2xl bg-base/80 p-4 border border-line/10 dark:bg-black/20 text-center mb-6 overflow-hidden">
+                        <span className="text-xs font-bold text-sky-700 dark:text-sky-300 uppercase tracking-wider inline-block text-center origin-center transition-transform duration-200 hover:scale-105 cursor-default">
                           {t("premium.form.conditionsTitle")}
                         </span>
-                        <p className="text-sm font-semibold text-ink mt-1">
-                          {t("premium.form.conditionsDesc")}
-                        </p>
+                        <div>
+                          <p className="text-sm font-semibold text-ink mt-1 inline-block max-w-[85%] mx-auto origin-center px-2 py-0.5">
+                            {t("premium.form.conditionsDesc")}
+                          </p>
+                        </div>
                       </div>
 
                       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
@@ -412,10 +414,10 @@ export default function PremiumPage() {
           </div>
 
           {/* Tarjeta Plan Premium (Recomendado) */}
-          <div className="sc-hover-card overflow-hidden relative flex flex-col justify-between rounded-3xl border-2 border-amber-400/50 bg-white p-6 sm:p-7 shadow-2xl shadow-amber-500/5 dark:bg-[#161233] dark:border-amber-400/50">
+          <div className="sc-hover-card relative flex flex-col justify-between rounded-3xl border-2 border-amber-400/50 bg-white p-6 sm:p-7 shadow-2xl shadow-amber-500/5 dark:bg-[#161233] dark:border-amber-400/50">
             {/* Badge Recomendado flotante */}
             <div className="absolute -top-3.5 right-6 z-10">
-              <span className="inline-flex items-center rounded-full bg-gradient-to-r from-amber-400 to-amber-500 px-3.5 py-1 text-[11px] font-extrabold uppercase tracking-wider text-slate-950 shadow-md">
+              <span className="inline-flex items-center rounded-full bg-gradient-to-r from-amber-400 to-amber-500 px-3.5 py-1 text-[11px] font-extrabold uppercase tracking-wider text-slate-950 shadow-md transition-transform duration-200 hover:scale-105 cursor-default">
                 {t("premium.plans.recommendedBadge")}
               </span>
             </div>

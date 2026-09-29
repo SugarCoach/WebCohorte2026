@@ -34,7 +34,7 @@ export function Footer() {
         <div className="grid grid-cols-1 gap-space-2xl pb-space-2xl md:grid-cols-2 lg:grid-cols-5">
           <div className="flex flex-col gap-space-md lg:col-span-2">
             <a className="flex items-center gap-2" href="/">
-              <div className="w-fit rounded-xl border border-border-subtle bg-surface-container-high p-1.5">
+              <div className="w-fit rounded-xl">
                 <Image
                   src={LOGO_SRC}
                   alt="SugarCoach Logo Oficial"
@@ -42,9 +42,10 @@ export function Footer() {
                   height={40}
                   className="h-9 w-auto object-contain drop-shadow-[0_2px_8px_rgba(196,92,255,0.3)]"
                 />
+                <p className="max-w-sm font-body-md text-body-md text-text-secondary">{t("footer.description")}</p>
+
               </div>
             </a>
-            <p className="max-w-sm font-body-md text-body-md text-text-secondary">{t("footer.description")}</p>
                         <div className="flex flex-wrap gap-space-sm pt-space-xs">
               <a className="inline-flex items-center gap-space-xs rounded-full border border-border-subtle bg-surface-container px-space-md py-space-xs text-text-primary transition-colors hover:bg-surface-container-high"
                 href="#">
