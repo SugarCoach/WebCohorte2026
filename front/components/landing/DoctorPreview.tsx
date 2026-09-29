@@ -26,15 +26,6 @@ export function DoctorPreview() {
           </p>
         </div>
 
-        {/* Fuente estilo manuscrito */}
-        <style>{`
-          @import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap');
-
-          .sc-marker {
-            font-family: 'Permanent Marker', cursive;
-          }
-        `}</style>
-
         {/* App paciente + flechas + Dashboard */}
         <div className="relative z-10 grid grid-cols-1 items-center gap-space-xl lg:grid-cols-12">
 

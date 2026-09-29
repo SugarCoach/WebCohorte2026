@@ -20,7 +20,7 @@ describe("Hero", () => {
     expect(
       screen.getByRole("heading", { level: 1, name: /cuidar tu diabetes/i }),
     ).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: /descargar sugarcoach gratis/i })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /descargar app/i })).toBeInTheDocument();
     expect(screen.getByRole("link", { name: /ver cómo funciona/i })).toBeInTheDocument();
   });
 });
