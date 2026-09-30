@@ -347,11 +347,11 @@ export function UserTypesSection() {
                       transition={{ duration: 0.2, ease: "easeOut" }}
                       className="mt-3 space-y-2.5"
                     >
-                      <div>
-                        <h4 className="text-sm font-bold text-ink leading-snug">
+                      <div className="overflow-visible">
+                        <h4 className="text-sm font-bold text-ink leading-snug origin-top-left max-w-[92%]">
                           {pillar.headline}
                         </h4>
-                        <p className="mt-0.5 text-xs leading-relaxed text-text-secondary line-clamp-2">
+                        <p className="mt-1 text-xs leading-relaxed text-text-secondary origin-top-left max-w-[92%]">
                           {pillar.description}
                         </p>
                       </div>
