@@ -98,7 +98,7 @@ function buildPillars(t: (key: string) => string): AudiencePillar[] {
       ],
       ctaLink: "#como-funciona",
       ctaLabel: t("userTypes.pacientes.ctaLabel"),
-      previewImage: "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=600&q=80",
+      previewImage: "/images/user_types_section/para_vos.png",
       previewBadge: t("userTypes.pacientes.previewBadge"),
     },
     {
@@ -141,7 +141,7 @@ function buildPillars(t: (key: string) => string): AudiencePillar[] {
       ],
       ctaLink: "#descargar",
       ctaLabel: t("userTypes.familias.ctaLabel"),
-      previewImage: "https://images.unsplash.com/photo-1542037104857-ffbb0b9155fb?auto=format&fit=crop&w=600&q=80",
+      previewImage: "/images/user_types_section/para_familias.png",
       previewBadge: t("userTypes.familias.previewBadge"),
     },
     {
@@ -184,7 +184,7 @@ function buildPillars(t: (key: string) => string): AudiencePillar[] {
       ],
       ctaLink: "#tratamiento",
       ctaLabel: t("userTypes.profesionales.ctaLabel"),
-      previewImage: "https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&w=600&q=80",
+      previewImage: "/images/user_types_section/para_medicos.png",
       previewBadge: t("userTypes.profesionales.previewBadge"),
     },
   ];
