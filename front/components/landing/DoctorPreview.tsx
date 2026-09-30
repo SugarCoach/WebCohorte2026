@@ -58,7 +58,7 @@ export function DoctorPreview() {
               </span>
 
               <ArrowRight
-                className="h-10 w-10 text-[#DC13A2]"
+                className="h-10 w-10 rotate-90 text-[#DC13A2] lg:rotate-0"
                 strokeWidth={3}
               />
             </div>
@@ -70,7 +70,7 @@ export function DoctorPreview() {
               </span>
 
               <ArrowRight
-                className="h-10 w-10 text-[#DC13A2]"
+                className="h-10 w-10 rotate-90 text-[#DC13A2] lg:rotate-0"
                 strokeWidth={3}
               />
             </div>
@@ -82,7 +82,7 @@ export function DoctorPreview() {
               </span>
 
               <ArrowRight
-                className="h-10 w-10 text-[#DC13A2]"
+                className="h-10 w-10 rotate-90 text-[#DC13A2] lg:rotate-0"
                 strokeWidth={3}
               />
             </div>
